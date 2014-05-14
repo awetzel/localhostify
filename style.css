@@ -1,0 +1,47 @@
+/* style: 54548c and dedede */
+body{
+  background-image: url('gui-bg.jpg');
+  color: #dedede;
+  padding: 40px;
+}
+html{
+  overflow-y: scroll;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  border-left: solid 10px #54548c;
+  border-top: solid 2px #54548c;
+  padding-left: 15px;
+  padding-top: 15px;
+  margin-top: 40px;
+}
+
+label{
+  margin-right: 10px;
+}
+.spec{
+  margin-bottom: 5px;
+}
+.socks{
+  margin-bottom: 20px;
+}
+#newspec .delete{
+  display: none;
+}
+#newspec {
+  float: left;
+}
+#save {
+  margin-top: 20px;
+}
+.host {
+  width: 300px;
+}
+.port {
+  width: 50px;
+}

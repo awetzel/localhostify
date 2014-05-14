@@ -1,10 +1,3 @@
-localhostify = [
-  //{localport: 8201, host: "www.shoppingadventure.fr", port: 80},
-  {localport: 8200, host: "qa-order01.priv.qa.kbrwadventure.com", port: 80},
-  {localport: 8201, host: "qa-pubwebsite01.priv.qa.kbrwadventure.com", port: 80}
-]
-
-socks = {host: "access.shoppingadventure.fr", port: 11111}
 
 function typed_array_equals(a,b) {
   for(var i in a) if(a[i] != b[i]) return false;
@@ -63,36 +56,28 @@ function proxify(proxyspecs,socks){
           });
         });
       });
-    })(localhostify[i]);
+    })(proxyspecs[i]);
   }
 }
 
 chrome.app.runtime.onLaunched.addListener(function() {
-  proxify(localhostify,socks);
+  //proxify(localhostify,socks);
   chrome.app.window.create('main.html', {
       id: 'config_server',
-      bounds: { width: 800, height: 600, left: 100, top: 100 },
+      //bounds: { width: 800, height: 600, left: 100, top: 100 },
       minWidth: 800, minHeight: 600
-//  }, function(win) {
-//      win.contentWindow.document.querySelector('form').addEventListener('submit',function(){
-//        var localports = win.contentWindow.document.querySelector('input[name="localport[]"]');
-//        var hosts = win.contentWindow.document.querySelector('input[name="host[]"]');
-//        var ports = win.contentWindow.document.querySelector('input[name="port[]"]');
-//        var proxyspecs = [];
-//        for(var i = 0; i<localports.length; i++) 
-//          if(localports[i].value && hosts[i].value && ports[i].value)
-//            proxyspecs.push({localport: localports[i].value,host: hosts[i].value, ports: ports[i].value});
-//        console.log(proxyspecs);
-//      });
+  }, function(win) {
+      win.contentWindow.addEventListener('reload',function(e){
+        chrome.sockets.tcp.getSockets(function(sockets){
+          for(var i in sockets)
+            chrome.sockets.tcp.close(sockets[i].socketId);
+        });
+        chrome.sockets.tcpServer.getSockets(function(sockets){
+          for(var i in sockets)
+            chrome.sockets.tcpServer.close(sockets[i].socketId);
+        });
+        proxify(e.detail.specs,e.detail.socks);
+      });
   });
 });
 
-//function get_specs_restart(callback){
-//  chrome.storage.local.get('specs_socks', function(data) {
-//    if (data && data.proxyspecs) {
-//      var specs_socks = JSON.parse(data.specs_socks);
-//      proxify(specs_socks.specs,specs_socks.socks);
-//      callback(specs_socks);
-//    }
-//  });
-//}

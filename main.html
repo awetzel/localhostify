@@ -1,5 +1,30 @@
 <html>
-  <body>
-    <h1>Configuration du proxy</h1>
-  </body>
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <h1><img src="logo.png"></h1>
+        
+        <h2>Rules</h2>
+        <form>
+            <div class="socks">
+                Socks5 - <label>host: <input type="text" class="host" name="sockshost"></label>
+                         <label>port: <input type="text" class="port" name="socksport"></label>
+            </div>
+            <div id="speccontainer"></div>
+            <div class="spec" id="newspec">
+                <label>Port local <input type="text" class="port" name="localport[]"></label>
+                <label>Remote host <input type="text" class="host" name="host[]"></label>
+                <label>Remote port <input type="text" class="port" name="port[]"></label>
+                <button class="delete">Delete</button>
+            </div>
+            <button id="next">Save</button>
+            <div style="clear: both"></div>
+            <button id="save">Save and reload</button>
+        </form>
+        <h2>Save or recover your config</h2>
+            <button id="download">download rules</button>
+            <button id="load">load rules</button>
+        <script src="content.js"> </script>
+    </body>
 </html>
